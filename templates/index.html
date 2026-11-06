@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Administra edificios y conexiones del campus. Consulta rutas con BFS y recorridos con DFS.">
+  <title>Rutas del campus</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap header-content">
+      <div>
+        <p class="eyebrow">Campus universitario</p>
+        <h1>Rutas y conexiones</h1>
+      </div>
+      <button id="reset-button" class="button button-muted" type="button">Restaurar grafo</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="workspace" aria-label="Administración del grafo del campus">
+      <article class="card graph-card">
+        <div class="section-heading">
+          <h2>Grafo del campus</h2>
+          <span class="legend"><i></i> Edificio <i class="line-key"></i> Conexión</span>
+        </div>
+        <div id="graph" class="graph" role="img" aria-label="Visualización de edificios y conexiones"></div>
+        <h3>Lista de adyacencia</h3>
+        <pre id="adjacency-list" class="code-block"></pre>
+      </article>
+
+      <div class="controls-column">
+        <section class="card panel">
+          <p class="eyebrow">BFS</p>
+          <h2>Buscar la ruta más corta</h2>
+          <form id="route-form">
+            <div class="fields two">
+              <label>Origen<select id="route-origin" required></select></label>
+              <label>Destino<select id="route-destination" required></select></label>
+            </div>
+            <button class="button button-blue" type="submit">Buscar ruta</button>
+          </form>
+          <div id="route-result" class="result" aria-live="polite">Selecciona origen y destino.</div>
+        </section>
+
+        <section class="card panel">
+          <p class="eyebrow purple">DFS</p>
+          <h2>Recorrer conexiones</h2>
+          <form id="dfs-form">
+            <label>Edificio inicial<select id="dfs-start" required></select></label>
+            <button class="button button-purple" type="submit">Iniciar recorrido</button>
+          </form>
+          <div id="dfs-result" class="result" aria-live="polite">Selecciona dónde comenzar.</div>
+        </section>
+      </div>
+    </section>
+
+    <section class="management">
+      <article class="card panel">
+        <p class="eyebrow green">Administración</p>
+        <h2>Edificios y conexiones</h2>
+        <form id="building-form" class="add-building">
+          <label>Nombre del edificio<input id="building-name" maxlength="60" placeholder="Ej. Gimnasio" required></label>
+          <button class="button button-muted" type="submit">Agregar edificio</button>
+        </form>
+        <form id="connection-form">
+          <div class="fields two">
+            <label>Edificio A<select id="connection-origin" required></select></label>
+            <label>Edificio B<select id="connection-destination" required></select></label>
+          </div>
+          <button class="button button-green" type="submit">Agregar conexión</button>
+        </form>
+        <details class="remove-connection">
+          <summary>Eliminar una conexión</summary>
+          <form id="remove-connection-form">
+            <div class="fields two">
+              <label>Edificio A<select id="remove-origin" required></select></label>
+              <label>Edificio B<select id="remove-destination" required></select></label>
+            </div>
+            <button class="button button-muted" type="submit">Eliminar conexión</button>
+          </form>
+        </details>
+        <p id="management-message" class="status" aria-live="polite"></p>
+      </article>
+    </section>
+
+  </main>
+</body>
+</html>
